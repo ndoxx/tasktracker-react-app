@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button'
+import { useLocation } from 'react-router-dom';
 
 interface IHeaderProps {
 	title: string,
@@ -17,10 +18,17 @@ const Header = (props: IHeaderProps): JSX.Element => {
 	);
 	*/
 
+	// To be able to query current route
+	const location = useLocation();
+
+	// Do not show the Add button if we're not on the '/' route
 	return (
 		<header className='header'>
 			<h1>{props.title}</h1>
-			<Button caption={props.addTaskShown ? 'Close' : 'Add'} color={props.addTaskShown ? 'red' : 'green'} onClick={props.onAdd} />
+			{ location.pathname === '/' && 
+				<Button caption={props.addTaskShown ? 'Close' : 'Add'} 
+						color={props.addTaskShown ? 'red' : 'green'} 
+						onClick={props.onAdd} /> }
 		</header>
 	);
 }
